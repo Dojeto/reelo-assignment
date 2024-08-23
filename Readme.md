@@ -19,8 +19,8 @@ Make sure you have the following installed on your local machine:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/dojeto/reelo-assignment.git
-cd reelo-assignment
+git clone https://github.com/dojeto/reelo-task.git
+cd reelo-task
 ```
 
 ### 2. Environment Variables
