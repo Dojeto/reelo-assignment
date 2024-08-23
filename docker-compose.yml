@@ -1,0 +1,55 @@
+services:
+  mongodb:
+    container_name: db
+    image: mongo
+    volumes:
+      - mongo_data:/data/db 
+    networks:
+      - my-network
+    
+  frontend:
+    container_name: music-frontend
+    ports:
+      - "5173:5173"
+    build:
+      context: ./frontend
+      dockerfile: dockerfile
+    env_file:
+      - .env
+    develop:
+      watch:
+        - action: sync
+          path: ./frontend/src
+          target: /app/src
+          ignore:
+            - node_modules/
+    networks:
+      - my-network
+
+  backend:
+    container_name: music-backend
+    ports:
+      - 3000:3000
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    env_file:
+      - .env  
+    develop:
+      watch:
+        - action: sync
+          path: ./backend/src
+          target: /app/src
+          ignore:
+            - node_modules/
+    networks:
+      - my-network
+    depends_on:
+      - mongodb
+
+networks:
+  my-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
